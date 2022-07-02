@@ -38,7 +38,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
             Toast.makeText(
                 this,
                 "onViewHolderClicked\n${model.toString()}\n" +
-                        "index - ${viewHolder.adapterPosition}",
+                    "index - ${viewHolder.adapterPosition}",
                 Toast.LENGTH_SHORT
             ).show()
         }.also { binding.recyclerView.adapter = it }
@@ -47,7 +47,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
     override fun onTextViewClicked(model: Text) {
         Toast.makeText(
             this,
-            "onSomethingHappened\n${model.text}",
+            "onTextViewClicked\n${model.text}",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -63,8 +63,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
     override fun onCardFlipped() {
         Toast.makeText(
             this,
-            "" +
-                    "Card flipped!",
+            "Card flipped!",
             Toast.LENGTH_SHORT
         ).show()
     }
