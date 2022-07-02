@@ -30,7 +30,7 @@
             app:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{()-> listener.onSomethingHappened(model)}"
+            android:onClick="@{()-> listener.onTextClicked(model)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">

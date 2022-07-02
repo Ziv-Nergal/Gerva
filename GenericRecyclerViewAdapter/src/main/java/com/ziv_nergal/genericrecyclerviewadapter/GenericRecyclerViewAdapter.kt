@@ -22,21 +22,19 @@ class GenericRecyclerViewAdapter<Listener>(
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Model>() {
 
-        override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean {
-            return oldItem == newItem
-        }
+        override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean =
+            oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Model, newItem: Model): Boolean {
-            return oldItem.isEqualTo(newItem)
-        }
+        override fun areContentsTheSame(oldItem: Model, newItem: Model): Boolean =
+            oldItem.isEqualTo(newItem)
     })
 
     init {
         updateData(items, false)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Listener> {
-        return viewHolderFactory?.createViewHolder(parent, viewType) ?: GenericViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Listener> =
+        viewHolderFactory?.createViewHolder(parent, viewType) ?: GenericViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 viewType,
@@ -44,7 +42,7 @@ class GenericRecyclerViewAdapter<Listener>(
                 false
             )
         )
-    }
+
 
     override fun onViewRecycled(holder: GenericViewHolder<Listener>) {
         super.onViewRecycled(holder)
