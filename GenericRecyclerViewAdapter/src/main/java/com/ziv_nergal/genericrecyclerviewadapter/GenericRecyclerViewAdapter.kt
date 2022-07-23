@@ -1,6 +1,7 @@
 package com.ziv_nergal.genericrecyclerviewadapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -80,8 +81,10 @@ class GenericRecyclerViewAdapter<Listener>(
                 binding.setVariable(BR.model, it)
             }
 
-            listener?.let {
-                binding.setVariable(BR.listener, it)
+            try {
+                listener?.let { binding.setVariable(BR.listener, it) }
+            } catch (exception: ClassCastException) {
+                exception.localizedMessage?.let { Log.d(this.javaClass.simpleName, it) }
             }
 
             onViewHolderClicked?.let { callback ->
