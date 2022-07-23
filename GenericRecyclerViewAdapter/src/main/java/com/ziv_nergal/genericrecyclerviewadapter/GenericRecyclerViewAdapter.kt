@@ -2,6 +2,7 @@ package com.ziv_nergal.genericrecyclerviewadapter
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,14 +13,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter.GenericViewHolder
 
-typealias ViewHolderClickCallback = (Model?, GenericViewHolder<*>) -> Unit
+typealias ViewHolderClickCallback = (Model?, GenericViewHolder) -> Unit
 
-class GenericRecyclerViewAdapter<Listener>(
+class GenericRecyclerViewAdapter(
     items: List<Model>,
-    private val listener: Listener? = null,
-    private val viewHolderFactory: ViewHolderFactory<Listener>? = null,
+    private val listener: Any? = null,
+    private val viewHolderFactory: ViewHolderFactory? = null,
     private val onViewHolderClicked: ViewHolderClickCallback? = null
-) : RecyclerView.Adapter<GenericViewHolder<Listener>>() {
+) : RecyclerView.Adapter<GenericViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Model>() {
 
@@ -34,7 +35,7 @@ class GenericRecyclerViewAdapter<Listener>(
         updateData(items, false)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Listener> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
         val genericViewHolder = viewHolderFactory?.createViewHolder(parent, viewType)
             ?: GenericViewHolder(
                 DataBindingUtil.inflate(
@@ -48,14 +49,14 @@ class GenericRecyclerViewAdapter<Listener>(
         return genericViewHolder
     }
 
-    override fun onViewRecycled(holder: GenericViewHolder<Listener>) {
+    override fun onViewRecycled(holder: GenericViewHolder) {
         super.onViewRecycled(holder)
         holder.onViewRecycled()
     }
 
     override fun getItemViewType(position: Int) = differ.currentList[position].getViewType()
 
-    override fun onBindViewHolder(holder: GenericViewHolder<Listener>, position: Int) =
+    override fun onBindViewHolder(holder: GenericViewHolder, position: Int) =
         holder.bind(differ.currentList[position], onViewHolderClicked)
 
     override fun getItemCount(): Int = differ.currentList.size
@@ -68,9 +69,9 @@ class GenericRecyclerViewAdapter<Listener>(
         }
     }
 
-    open class GenericViewHolder<Listener>(
+    open class GenericViewHolder(
         protected open val binding: ViewDataBinding,
-        protected var listener: Listener? = null
+        protected var listener: Any? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
         open fun bind(
@@ -98,7 +99,7 @@ class GenericRecyclerViewAdapter<Listener>(
             binding.unbind()
         }
 
-        internal fun setListener(listener: Listener?) {
+        internal fun setListener(listener: Any?) {
             this.listener = listener
         }
     }

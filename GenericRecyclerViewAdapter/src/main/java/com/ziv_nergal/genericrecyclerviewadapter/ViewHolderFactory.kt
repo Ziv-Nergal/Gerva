@@ -6,7 +6,7 @@ import android.view.ViewGroup
  * Pass an instance of this factory implementation to the GenericRecyclerViewAdapter constructor
  * when you need to have a more complex viewHolder than the basic GenericViewHolder.
  */
-interface ViewHolderFactory<Listener> {
+interface ViewHolderFactory {
 
     /**
      * Creates a subclass of the GenericViewHolder from given parent viewGroup and viewType.
@@ -19,5 +19,5 @@ interface ViewHolderFactory<Listener> {
     fun createViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GenericRecyclerViewAdapter.GenericViewHolder<Listener>?
+    ): GenericRecyclerViewAdapter.GenericViewHolder?
 }

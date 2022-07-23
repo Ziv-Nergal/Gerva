@@ -6,9 +6,9 @@ import com.ziv_nergal.genericrecyclerviewadapter.ViewHolderClickCallback
 import com.ziv_nergal.gerva.databinding.ItemCardViewBinding
 import com.ziv_nergal.gerva.model.Card
 
-class CardViewHolder<Listener>(
+class CardViewHolder(
     override val binding: ItemCardViewBinding
-) : GenericRecyclerViewAdapter.GenericViewHolder<Listener>(binding) {
+) : GenericRecyclerViewAdapter.GenericViewHolder(binding) {
 
     override fun bind(
         model: Model?,

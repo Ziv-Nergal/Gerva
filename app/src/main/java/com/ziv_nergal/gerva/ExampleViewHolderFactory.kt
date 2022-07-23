@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
 import com.ziv_nergal.genericrecyclerviewadapter.ViewHolderFactory
 
-class ExampleViewHolderFactory<Listener> : ViewHolderFactory<Listener> {
+class ExampleViewHolderFactory : ViewHolderFactory {
 
     override fun createViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GenericRecyclerViewAdapter.GenericViewHolder<Listener>? {
+    ): GenericRecyclerViewAdapter.GenericViewHolder? {
 
         return when (viewType) {
             R.layout.item_card_view ->
