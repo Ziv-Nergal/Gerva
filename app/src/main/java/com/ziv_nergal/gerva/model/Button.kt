@@ -15,6 +15,4 @@ data class Button(
     }
 
     override fun getViewType(): Int = R.layout.item_button
-
-    override fun isEqualTo(other: Model?): Boolean = (other as? Button)?.title == this.title
 }

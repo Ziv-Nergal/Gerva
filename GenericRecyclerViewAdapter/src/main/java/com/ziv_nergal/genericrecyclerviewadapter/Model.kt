@@ -19,5 +19,5 @@ interface Model {
      *
      * @return true if models have identical content, otherwise false.
      */
-    fun isEqualTo(other: Model?): Boolean
+    fun isEqualTo(other: Model?): Boolean = this == other
 }

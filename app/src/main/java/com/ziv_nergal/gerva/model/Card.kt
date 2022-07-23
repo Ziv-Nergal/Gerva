@@ -10,6 +10,4 @@ class Card : Model {
     }
 
     override fun getViewType(): Int = R.layout.item_card_view
-
-    override fun isEqualTo(other: Model?): Boolean = false
 }

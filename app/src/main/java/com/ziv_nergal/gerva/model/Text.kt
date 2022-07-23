@@ -12,6 +12,4 @@ data class Text(
     }
 
     override fun getViewType(): Int = R.layout.item_text
-
-    override fun isEqualTo(other: Model?): Boolean = (other as? Text)?.text == this.text
 }
