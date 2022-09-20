@@ -5,10 +5,8 @@ import android.widget.Toast
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
 import com.ziv_nergal.gerva.base.BindingActivity
 import com.ziv_nergal.gerva.databinding.ActivityMainBinding
-import com.ziv_nergal.gerva.model.Button
-import com.ziv_nergal.gerva.model.Card
-import com.ziv_nergal.gerva.model.Image
-import com.ziv_nergal.gerva.model.Text
+import com.ziv_nergal.gerva.model.*
+import java.util.*
 
 class MainActivity : BindingActivity<ActivityMainBinding>(),
     Text.Listener, Button.Listener, Card.Listener {
@@ -34,14 +32,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
             ),
             this,
             ExampleViewHolderFactory()
-        ) { model, viewHolder ->
-            Toast.makeText(
-                this,
-                "onViewHolderClicked\n${model.toString()}\n" +
-                    "index - ${viewHolder.adapterPosition}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }.also { binding.recyclerView.adapter = it }
+        ).also { binding.recyclerView.adapter = it }
     }
 
     override fun onTextViewClicked(model: Text) {
@@ -53,11 +44,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
     }
 
     override fun onButtonClicked(button: Button) {
-        Toast.makeText(
-            this,
-            "onExampleButtonClicked\n${button.title}",
-            Toast.LENGTH_SHORT
-        ).show()
+        (binding.recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
+            arrayListOf(
+                Student("1", "Ziv", "Nergal", Date(63, 2, 1)),
+                Student("2", "Telem", "Tobi", Date(72, 11, 3)),
+                Student("3", "Eyal", "Leshes", Date(99, 8, 5)),
+                Student("4", "Shay", "Shimoni", Date(89, 5, 2)),
+                Student("5", "Netanel", "Amar", Date(56, 3, 2)),
+                Student("6", "Shoval", "Hazan", Date(85, 4, 2)),
+                Student("7", "Tal", "Zion", Date(95, 5, 2)),
+                Student("8", "Maayan", "Zuntz", Date(81, 5, 2))
+            )
+        )
     }
 
     override fun onCardFlipped() {

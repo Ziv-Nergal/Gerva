@@ -25,10 +25,10 @@ class GenericRecyclerViewAdapter(
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Model>() {
 
         override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean =
-            oldItem == newItem
+            oldItem.areItemsTheSame(newItem)
 
         override fun areContentsTheSame(oldItem: Model, newItem: Model): Boolean =
-            oldItem.isEqualTo(newItem)
+            oldItem.areContentsTheSame(newItem)
     })
 
     init {
