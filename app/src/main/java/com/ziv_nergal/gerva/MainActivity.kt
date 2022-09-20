@@ -3,6 +3,8 @@ package com.ziv_nergal.gerva
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
 import com.ziv_nergal.gerva.databinding.ActivityMainBinding
 import com.ziv_nergal.gerva.model.*
@@ -21,20 +23,22 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
             ).root
         )
 
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+
         initGenericRecyclerViewAdapter()
     }
 
     private fun initGenericRecyclerViewAdapter() {
         GenericRecyclerViewAdapter(
             listOf(
-                Image(R.mipmap.ic_launcher_round),
+                Image(R.drawable.puzzle),
                 Text(getString(R.string.text_description)),
+                Card(),
                 Button(
                     getString(R.string.app_name),
                     getString(R.string.button_subtitle),
-                    R.mipmap.ic_launcher
-                ),
-                Card()
+                    R.drawable.ic_baseline_flip_camera_android_24
+                )
             ),
             this,
             ExampleViewHolderFactory()

@@ -3,14 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.2640625" />
         <entry key="GenericRecyclerViewAdapter/src/main/res/layout/item_example_text.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.133" />
-        <entry key="app/src/main/res/layout/item_button.xml" value="0.1775612860369536" />
-        <entry key="app/src/main/res/layout/item_card_view.xml" value="0.14835164835164835" />
+        <entry key="app/src/main/res/layout/item_button.xml" value="0.32060022646664105" />
+        <entry key="app/src/main/res/layout/item_card_view.xml" value="0.42489583780477336" />
         <entry key="app/src/main/res/layout/item_example_button.xml" value="0.24728546142578126" />
         <entry key="app/src/main/res/layout/item_image.xml" value="0.23697916666666666" />
         <entry key="app/src/main/res/layout/item_map_view.xml" value="0.23697916666666666" />
-        <entry key="app/src/main/res/layout/item_student.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/item_text.xml" value="0.20074349442379183" />
       </map>
     </option>

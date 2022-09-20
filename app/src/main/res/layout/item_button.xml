@@ -20,8 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="12dp"
+        android:layout_marginVertical="8dp"
         android:background="@drawable/background_button"
+        android:foreground="?selectableItemBackgroundBorderless"
         android:layout_marginHorizontal="32dp"
         android:onClick="@{()-> listener.onButtonClicked(model)}"
         tools:ignore="UnusedAttribute">
@@ -30,7 +31,7 @@
             android:id="@+id/mainIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            tools:src="@mipmap/ic_launcher_round"
+            tools:src="@drawable/ic_baseline_flip_camera_android_24"
             bind:srcImg="@{model.mainIcon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,15 +48,14 @@
             bind:layout_constraintStart_toEndOf="@id/mainIcon"
             bind:layout_constraintTop_toTopOf="@id/mainIcon"
             bind:layout_constraintBottom_toBottomOf="@id/mainIcon"
-            bind:layout_constraintEnd_toStartOf="@id/secondaryIcon"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22dp"
-                android:textColor="#000"
+                android:textSize="18dp"
+                android:textColor="#fff"
                 android:text="@{model.title}"
                 tools:text="Button Title"
                 tools:ignore="SpUsage" />
@@ -64,28 +64,13 @@
                 android:id="@+id/subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                bind:visible="@{model.subtitle != null &amp;&amp; !model.subtitle.empty}"
-                android:textColor="#000"
+                android:textSize="14dp"
+                android:textColor="#fff"
                 android:text="@{model.subtitle}"
                 tools:text="Button Subtitle"
                 tools:ignore="SpUsage" />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/secondaryIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            tools:src="@mipmap/ic_launcher"
-            bind:srcImg="@{model.secondaryIcon}"
-            bind:visible="@{model.secondaryIcon != null}"
-            bind:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginVertical="12dp"
-            android:layout_marginEnd="14dp"
-            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
