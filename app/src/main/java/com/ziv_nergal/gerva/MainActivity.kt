@@ -2,19 +2,25 @@ package com.ziv_nergal.gerva
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
-import com.ziv_nergal.gerva.base.BindingActivity
 import com.ziv_nergal.gerva.databinding.ActivityMainBinding
 import com.ziv_nergal.gerva.model.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : BindingActivity<ActivityMainBinding>(),
-    Text.Listener, Button.Listener, Card.Listener {
-
-    override val layoutResource: Int = R.layout.activity_main
+class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(
+            ActivityMainBinding.inflate(
+                layoutInflater,
+                null,
+                false
+            ).root
+        )
+
         initGenericRecyclerViewAdapter()
     }
 
@@ -32,7 +38,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
             ),
             this,
             ExampleViewHolderFactory()
-        ).also { binding.recyclerView.adapter = it }
+        ).also { recyclerView.adapter = it }
     }
 
     override fun onTextViewClicked(model: Text) {
@@ -43,8 +49,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
         ).show()
     }
 
+    override fun onCardFlipped() {
+        Toast.makeText(
+            this,
+            "Card flipped!",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     override fun onButtonClicked(button: Button) {
-        (binding.recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
+        (recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
             arrayListOf(
                 Student("1", "Ziv", "Nergal", Date(63, 2, 1)),
                 Student("2", "Telem", "Tobi", Date(72, 11, 3)),
@@ -56,13 +70,5 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
                 Student("8", "Maayan", "Zuntz", Date(81, 5, 2))
             )
         )
-    }
-
-    override fun onCardFlipped() {
-        Toast.makeText(
-            this,
-            "Card flipped!",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }
