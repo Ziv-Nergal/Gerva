@@ -1,5 +1,7 @@
 package com.ziv_nergal.genericrecyclerviewadapter
 
+import java.util.*
+
 /**
  * This is an example data class that implement Model interface.
  * It will represent a simple view holder that will hold a single textView that will get it's
@@ -21,7 +23,7 @@ data class ExampleModel(
         fun onTextClicked(model: ExampleModel)
     }
 
-    override fun getViewType(): Int = R.layout.item_example_text
+    override val id: String = UUID.randomUUID().toString()
 
-    override fun isEqualTo(other: Model?): Boolean = (other as? ExampleModel)?.text == this.text
+    override fun getViewType(): Int = R.layout.item_example_text
 }

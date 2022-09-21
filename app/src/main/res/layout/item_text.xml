@@ -35,7 +35,7 @@
             android:layout_margin="12dp"
             tools:text="View Holder Text"
             android:text="@{model.text}"
-            android:textColor="#000" />
+            android:textColor="#fff" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

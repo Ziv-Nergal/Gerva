@@ -1,8 +1,6 @@
 package com.ziv_nergal.genericrecyclerviewadapter
 
-import android.annotation.SuppressLint
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -25,14 +23,14 @@ class GenericRecyclerViewAdapter(
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Model>() {
 
         override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean =
-            oldItem == newItem
+            oldItem.areItemsTheSame(newItem)
 
         override fun areContentsTheSame(oldItem: Model, newItem: Model): Boolean =
-            oldItem.isEqualTo(newItem)
+            oldItem.areContentsTheSame(newItem)
     })
 
     init {
-        updateData(items, false)
+        updateData(items)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
@@ -61,10 +59,8 @@ class GenericRecyclerViewAdapter(
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateData(list: List<Model>, animated: Boolean = true, callback: (() -> Unit)? = null) {
+    fun updateData(list: List<Model>, callback: (() -> Unit)? = null) {
         differ.submitList(list) {
-            if (!animated) notifyDataSetChanged()
             callback?.invoke()
         }
     }

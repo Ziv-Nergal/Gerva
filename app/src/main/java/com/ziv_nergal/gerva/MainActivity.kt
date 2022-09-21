@@ -2,46 +2,47 @@ package com.ziv_nergal.gerva
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
-import com.ziv_nergal.gerva.base.BindingActivity
 import com.ziv_nergal.gerva.databinding.ActivityMainBinding
-import com.ziv_nergal.gerva.model.Button
-import com.ziv_nergal.gerva.model.Card
-import com.ziv_nergal.gerva.model.Image
-import com.ziv_nergal.gerva.model.Text
+import com.ziv_nergal.gerva.model.*
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : BindingActivity<ActivityMainBinding>(),
-    Text.Listener, Button.Listener, Card.Listener {
-
-    override val layoutResource: Int = R.layout.activity_main
+class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(
+            ActivityMainBinding.inflate(
+                layoutInflater,
+                null,
+                false
+            ).root
+        )
+
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+
         initGenericRecyclerViewAdapter()
     }
 
     private fun initGenericRecyclerViewAdapter() {
         GenericRecyclerViewAdapter(
             listOf(
-                Image(R.mipmap.ic_launcher_round),
+                Image(R.drawable.puzzle),
                 Text(getString(R.string.text_description)),
+                Card(),
                 Button(
                     getString(R.string.app_name),
                     getString(R.string.button_subtitle),
-                    R.mipmap.ic_launcher
-                ),
-                Card()
+                    R.drawable.ic_baseline_flip_camera_android_24
+                )
             ),
             this,
             ExampleViewHolderFactory()
-        ) { model, viewHolder ->
-            Toast.makeText(
-                this,
-                "onViewHolderClicked\n${model.toString()}\n" +
-                    "index - ${viewHolder.adapterPosition}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }.also { binding.recyclerView.adapter = it }
+        ).also { recyclerView.adapter = it }
     }
 
     override fun onTextViewClicked(model: Text) {
@@ -52,19 +53,26 @@ class MainActivity : BindingActivity<ActivityMainBinding>(),
         ).show()
     }
 
-    override fun onButtonClicked(button: Button) {
-        Toast.makeText(
-            this,
-            "onExampleButtonClicked\n${button.title}",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
     override fun onCardFlipped() {
         Toast.makeText(
             this,
             "Card flipped!",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun onButtonClicked(button: Button) {
+        (recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
+            arrayListOf(
+                Student("1", "Ziv", "Nergal", Date(63, 2, 1)),
+                Student("2", "Telem", "Tobi", Date(72, 11, 3)),
+                Student("3", "Eyal", "Leshes", Date(99, 8, 5)),
+                Student("4", "Shay", "Shimoni", Date(89, 5, 2)),
+                Student("5", "Netanel", "Amar", Date(56, 3, 2)),
+                Student("6", "Shoval", "Hazan", Date(85, 4, 2)),
+                Student("7", "Tal", "Zion", Date(95, 5, 2)),
+                Student("8", "Maayan", "Zuntz", Date(81, 5, 2))
+            )
+        )
     }
 }
