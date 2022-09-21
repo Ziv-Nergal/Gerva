@@ -2,7 +2,6 @@ package com.ziv_nergal.gerva
 
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
 import com.ziv_nergal.genericrecyclerviewadapter.Model
-import com.ziv_nergal.genericrecyclerviewadapter.ViewHolderClickCallback
 import com.ziv_nergal.gerva.databinding.ItemCardViewBinding
 import com.ziv_nergal.gerva.model.Card
 
@@ -10,11 +9,8 @@ class CardViewHolder(
     override val binding: ItemCardViewBinding
 ) : GenericRecyclerViewAdapter.GenericViewHolder(binding) {
 
-    override fun bind(
-        model: Model?,
-        onViewHolderClicked: ViewHolderClickCallback?
-    ) {
-        super.bind(model, onViewHolderClicked)
+    override fun bind(model: Model?) {
+        super.bind(model)
         binding.cardView.setOnClickListener { flipCard() }
     }
 
