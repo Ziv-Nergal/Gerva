@@ -1,10 +1,12 @@
+<p align="center">
+  <img width="300" height="300" src="https://user-images.githubusercontent.com/42380097/191611740-dcbb3f4c-173e-43e2-a810-a543abf7d3f0.png">
+</p>
+
 # Gerva
 
 **Gerva** is a small and very useful library made for building `RecyclerViews` using a single, smart generic `RecyclerViewAdapter`. 
 
-i've seen a lot of projects having a package filled with `RecyclerViewAdapter`'s, each one written with a whole bunch of code involving business logic and UI logic. **Gerva** is made with the thought that every project should have one smart `RecyclerViewAdapter` containing only the code related to building `RecyclerViews`.
-
-#### Problems It Solves
+## Key Features
 
 - Eliminating the need for writing all the boilerplate code involved with `RecyclerViewAdapters`.
 - Making sure the `RecyclerViewAdapter` is not abused and turned into a massive class containing thousands lines of code and business login.
@@ -12,90 +14,55 @@ i've seen a lot of projects having a package filled with `RecyclerViewAdapter`'s
 - Encapsulates all data binding code into xml files using data binding mechanism.
 - Eliminating the need of having more than 1 `RecyclerViewAdapter` in your project :)
 
-## Interfaces
+## How To Use Gerva?
 
-#### `Model` interface
-
-Each `GenericRecyclerViewAdapter` will have it's list of `Model`'s holding data for later binding to the `ViewHolder`.
-When the getItemViewType method is called in the `GenericRecyclerViewAdapter`, we return a layout resource id from the model list and later use it to inflate our view.
-Classes implementing this interface should also be identifiable via a uniqe identifier of some sort.
-
-#### `ViewHolderFactory` interface
-
-By default, each inflated view is wrapped with a basic view holder, `GenericViewHolder`.
-Sometimes when you need some complex UI and logic, you can subclass the `GenericViewHolder` and pass an implementation of `ViewHolderFactory`
-to the `GenericRecyclerViewAdapter` constructor, by that telling it which of his items need to be wrapped with your custom view holder.
-
-A better way of understanding this is some example code:
+Let's say we want to show a list of students.
+The simplest use case would looke something like this:
 
 ```kotlin
-class ExampleViewHolderFactory : ViewHolderFactory {
-
-    override fun createViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): GenericRecyclerViewAdapter.GenericViewHolder? {
-
-        return when (viewType) {
-            R.layout.item_card_view ->
-                CardViewHolder(
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        viewType,
-                        parent,
-                        false
-                    )
-                )
-            else -> null
-        }
-    }
-}
-
-class CardViewHolder(
-    override val binding: ItemCardViewBinding
-) : GenericRecyclerViewAdapter.GenericViewHolder(binding) {
-
-    override fun bind(
-        model: Model?,
-        onViewHolderClicked: ViewHolderClickCallback?
-    ) {
-        super.bind(model, onViewHolderClicked)
-        binding.cardView.setOnClickListener { flipCard() }
-    }
-
-    private fun flipCard() {
-        itemView.animate().scaleY(0f).withEndAction {
-            binding.cardContent.rotation += 180f
-            itemView.animate().scaleY(1f).withEndAction {
-                (listener as? Card.Listener)?.onCardFlipped()
-            }
-        }
-    }
-}
+GenericRecyclerViewAdapter(
+    listOf(
+        Student("1", "will", "Smith", Date(63, 2, 1)),
+        Student("2", "Harry", "Potter", Date(72, 11, 3)),
+        Student("3", "Dave", "Lawrence", Date(99, 8, 5))
+        ...
+    )
+).also { recyclerView.adapter = it }
 ```
 
-the createViewHolder method will be called each time a viewHolder is created in the adapter, it allows delegation of the viewHolder construction to allow passing any kind of viewHolder to be built accord to a layout resource id.
+###### Result:
 
-## Usage
+<img width="338" alt="Screen Shot 2022-09-20 at 23 55 28" src="https://user-images.githubusercontent.com/42380097/191362685-6b338582-610a-48be-a903-00d58320ab73.png">
 
-Let's say we want to show a list of students. Here are the steps for doing so with GERVA:
+#### `Model`
 
-- Create a data class for our student and implement the model interface.
+The GenericRecyclerViewAdapter takes in a list of Models, `Model` is an interface that represents each item of that list.
 
 ```kotlin
+interface Model: Identifiable {
+    fun getViewType(): Int
+    fun areItemsTheSame(otherItem: Model): Boolean = this.id == otherItem.id
+    fun areContentsTheSame(otherItem: Model): Boolean = this == otherItem
+}
+
 data class Student(
-    override val id: String, 
-    val firstName: String, 
-    val lastName: String, 
+    override val id: String,
+    val firstName: String,
+    val lastName: String,
     val dateOfBirth: Date
     ): Model {
+    
     override fun getViewType(): Int = R.layout.item_student
+    
+    // Checks for same identifier
+    override fun areItemsTheSame(otherItem: Model): Boolean = (otherItem as? Student)?.id == this.id
+    
+    // Checks for same UI data - called only if `areItemsTheSame` returns true
+    override fun areContentsTheSame(otherItem: Model): Boolean = this == otherItem
 }
 ```
 
-- Create a xml file for our student layout. 
-
-***Note*** - You must have a data binding layout and a variable named 'model' of the type of your model class in order for the binding of the model class to work!
+In order of getting your `Model` injected to your layout with DataBinding, **You must use a data binding layout and add a variable named model:**
 
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -112,25 +79,172 @@ data class Student(
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
-        ...
+        
+        <TextView
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@{model.firstName}" />
+            ...
 ```
 
-- Create a generic adapter and pass a list of sturdents to it.
+Now let's say we want to add anothe view to our list, a card that flips every 3 seconds:
 
 ```kotlin
 GenericRecyclerViewAdapter(
-    listOf(
-        Student("1", "will", "Smith", Date(63, 2, 1)),
+    arrayListOf(
+        Student("1", "Will", "Smith", Date(63, 2, 1)),
         Student("2", "Harry", "Potter", Date(72, 11, 3)),
-        Student("3", "Dave", "Lawrence", Date(99, 8, 5))
-        ...
-    )
+        Student("3", "Dave", "Lawrence", Date(99, 8, 5)),
+        Card()
+    ),
+    viewHolderFactory = MyViewHolderFactory()
 ).also { recyclerView.adapter = it }
 ```
+We use the ViewHolderFactory interface here to tell the adapter that we need a custom viewHolder for the card view:
 
-#### Result
+```kotlin
+interface ViewHolderFactory {
+    fun createViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): GenericRecyclerViewAdapter.GenericViewHolder?
+}
 
-<img width="338" alt="Screen Shot 2022-09-20 at 23 55 28" src="https://user-images.githubusercontent.com/42380097/191362685-6b338582-610a-48be-a903-00d58320ab73.png">
+class MyViewHolderFactory : ViewHolderFactory {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): GenericRecyclerViewAdapter.GenericViewHolder? {
+
+        return when (viewType) {
+            R.layout.item_card_view ->
+                CardViewHolder(
+                    ItemCardViewBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+                
+            // Returning null will tell the adapter to use the base GenericViewHolder
+            else -> null
+        }
+    }
+}
+
+class CardViewHolder(
+    override val binding: ItemCardViewBinding
+) : GenericRecyclerViewAdapter.GenericViewHolder(binding) {
+
+    override fun bind(model: Model?) {
+        super.bind(model)
+        flipCard()
+    }
+
+    private fun flipCard() {
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                itemView.animate().scaleY(0f).withEndAction {
+                    binding.cardContent.rotation += 180f
+                    itemView.animate().scaleY(1f).withEndAction {
+                        (listener as? Card.Listener)?.onCardFlipped()
+                    }
+                }
+                mainHandler.postDelayed(this, 3000)
+            }
+        })
+    }
+}
+```
+
+###### Result:
+
+<p align="start">
+  <img width="300" src="https://user-images.githubusercontent.com/42380097/191613126-8d3210f6-b747-49dd-a87b-f06e8e4488db.gif">
+</p>
+
+One more thing, we now want to create another in our list that when clicked, he shuffles the order of the recyclerView items:
+
+```kotlin
+data class Button(
+    val title: String,
+    val subtitle: String? = null,
+    val mainIcon: Int,
+    val secondaryIcon: Int? = null
+) : Model {
+
+    interface Listener {
+        fun onButtonClicked(button: Button)
+    }
+    
+    override val id: String = UUID.randomUUID().toString()
+
+    override fun getViewType(): Int = R.layout.item_button
+}
+```
+
+```xml
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.ziv_nergal.gerva.model.Button" />
+
+        <variable
+            name="listener"
+            type="com.ziv_nergal.gerva.model.Button.Listener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> listener.onButtonClicked(model)}">
+        ...
+```
+
+We can create an interface and pass it to the adapter as an Any object. the interface will be later binded with our layout so we can use it to notify listeners on user interaction with our views. now, in our main activity we implement that interface and pass it to the adapter:
+
+```kotlin
+val models = arrayListOf(
+    Student("1", "Will", "Smith", Date(63, 2, 1)),
+    Student("2", "Harry", "Potter", Date(72, 11, 3)),
+    Student("3", "Dave", "Lawrence", Date(99, 8, 5)),
+    Card(),
+    Button(
+        "Shuffle",
+        "Click to shuffle",
+        R.drawable.ic_baseline_flip_camera_android_24
+    )
+)
+
+private fun initGenericRecyclerViewAdapter() {
+    GenericRecyclerViewAdapter(
+        models,
+        listener =  this@MainActivity,
+        viewHolderFactory = ExampleViewHolderFactory()
+    ).also { recyclerView.adapter = it }
+}
+
+override fun onButtonClicked(button: Button) {
+    (recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(models.shuffled())
+}
+```
+
+###### Result:
+
+<p align="start">
+  <img width="300" height="300" src="https://user-images.githubusercontent.com/42380097/191616359-ccb044cf-cf49-42f5-a2e2-a4191d05659c.gif">
+</p>
 
 ## Installation
 
