@@ -64,14 +64,9 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
     override fun onButtonClicked(button: Button) {
         (recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
             arrayListOf(
-                Student("1", "Ziv", "Nergal", Date(63, 2, 1)),
-                Student("2", "Telem", "Tobi", Date(72, 11, 3)),
-                Student("3", "Eyal", "Leshes", Date(99, 8, 5)),
-                Student("4", "Shay", "Shimoni", Date(89, 5, 2)),
-                Student("5", "Netanel", "Amar", Date(56, 3, 2)),
-                Student("6", "Shoval", "Hazan", Date(85, 4, 2)),
-                Student("7", "Tal", "Zion", Date(95, 5, 2)),
-                Student("8", "Maayan", "Zuntz", Date(81, 5, 2))
+                Student("1", "Will", "Smith", Date(63, 2, 1)),
+                Student("2", "Harry", "Potter", Date(72, 11, 3)),
+                Student("3", "Dave", "Lawrence", Date(99, 8, 5))
             )
         )
     }
