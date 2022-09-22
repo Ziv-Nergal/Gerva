@@ -262,7 +262,7 @@ allprojects {
 }
 
 dependencies {
-   implementation 'com.github.User:Repo:Version'
+   implementation 'com.github.Ziv-Nergal:Gerva:1.0.2'
 }
 ```
 
