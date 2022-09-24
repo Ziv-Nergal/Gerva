@@ -1,11 +1,11 @@
 package com.ziv_nergal.genericrecyclerviewadapter
 
 import android.util.Log
+import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -33,19 +33,29 @@ class GenericRecyclerViewAdapter(
         updateData(items)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
-        val genericViewHolder = viewHolderFactory?.createViewHolder(parent, viewType)
-            ?: GenericViewHolder(
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    viewType,
-                    parent,
-                    false
-                )
-            )
-        genericViewHolder.setListener(listener)
-        genericViewHolder.setClickListener(onViewHolderClicked)
-        return genericViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, layoutId: Int): GenericViewHolder {
+
+        // If we get a custom viewHolder from the ViewHolder factory, return it, else, create a basic GenericViewHolder
+        viewHolderFactory?.createViewHolder(parent, layoutId)?.let { viewHolder ->
+            viewHolder.setListener(listener)
+            viewHolder.setClickListener(onViewHolderClicked)
+            return viewHolder
+        }
+
+        val viewDataBinding: ViewDataBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            layoutId,
+            parent,
+            false
+        ) ?: throw InflateException(
+            "Couldn't inflate binding layout for layout ${
+                parent.context.resources.getResourceName(
+                    layoutId
+                ) ?: "id $layoutId"
+            }, make sure the id is for a binding layout."
+        )
+
+        return GenericViewHolder(viewDataBinding, listener, onViewHolderClicked)
     }
 
     override fun onViewRecycled(holder: GenericViewHolder) {
