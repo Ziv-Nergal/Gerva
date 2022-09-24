@@ -9,7 +9,7 @@
 ## Key Features
 
 - Eliminating the need for writing all the boilerplate code involved with `RecyclerViewAdapters`.
-- Making sure the `RecyclerViewAdapter` is not abused and turned into a massive class containing thousands lines of code and business login.
+- Making sure the `RecyclerViewAdapter` is not abused and turned into a massive class containing hundreds of lines of code and business logic.
 - Separating UI into small reusable elements, Easy to maintain, extend and bugfix.
 - Encapsulates all data binding code into xml files using data binding mechanism.
 - Eliminating the need of having more than 1 `RecyclerViewAdapter` in your project :)
@@ -17,7 +17,7 @@
 ## How To Use Gerva?
 
 Let's say we want to show a list of students.
-The simplest use case would looke something like this:
+The simplest use case would look something like this:
 
 ```kotlin
 GenericRecyclerViewAdapter(
@@ -88,7 +88,7 @@ In order of getting your `Model` injected to your layout with DataBinding, **You
             ...
 ```
 
-Now let's say we want to add anothe view to our list, a card that flips every 3 seconds:
+Now let's say we want to add another view to our list, a card that flips every 3 seconds:
 
 ```kotlin
 GenericRecyclerViewAdapter(
@@ -212,7 +212,7 @@ data class Button(
         ...
 ```
 
-We can create an interface and pass it to the adapter as an Any object. the interface will be later binded with our layout so we can use it to notify listeners on user interaction with our views. now, in our main activity we implement that interface and pass it to the adapter:
+We can create an interface and pass it to the adapter as an Any object. the interface will be later be binded with our layout so we can use it to notify listeners on user interaction with our views. now, in our main activity we implement that interface and pass it to the adapter:
 
 ```kotlin
 val models = arrayListOf(
@@ -262,7 +262,7 @@ allprojects {
 }
 
 dependencies {
-   implementation 'com.github.Ziv-Nergal:Gerva:1.0.2'
+   implementation 'com.github.Ziv-Nergal:Gerva:1.0.3'
 }
 ```
 
