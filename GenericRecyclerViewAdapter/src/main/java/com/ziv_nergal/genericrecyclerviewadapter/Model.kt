@@ -1,5 +1,6 @@
 package com.ziv_nergal.genericrecyclerviewadapter
 
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
 interface Identifiable {
@@ -11,14 +12,15 @@ interface Identifiable {
  * This will allow each viewHolder being created to get it's layout resource id and
  * compare it with other viewHolders for better performance.
  */
-interface Model: Identifiable {
+interface Model : Identifiable {
 
     /**
      * Gets the resource id from the model class.
      *
      * @return A layout resource id.
      */
-    fun getViewType(): Int
+    @LayoutRes
+    fun getLayoutId(): Int
 
     /**
      * Called to check whether two objects represent the same item.

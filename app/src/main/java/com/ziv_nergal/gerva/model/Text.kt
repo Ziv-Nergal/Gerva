@@ -8,11 +8,11 @@ data class Text(
     val text: String
 ) : Model {
 
-    override val id: String = UUID.randomUUID().toString()
-
     interface Listener {
         fun onTextViewClicked(model: Text)
     }
 
-    override fun getViewType(): Int = R.layout.item_text
+    override val id: String = UUID.randomUUID().toString()
+
+    override fun getLayoutId(): Int = R.layout.item_text
 }

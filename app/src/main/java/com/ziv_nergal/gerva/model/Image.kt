@@ -8,5 +8,5 @@ data class Image(val src: Int) : Model {
 
     override val id: String = UUID.randomUUID().toString()
 
-    override fun getViewType(): Int = R.layout.item_image
+    override fun getLayoutId(): Int = R.layout.item_image
 }

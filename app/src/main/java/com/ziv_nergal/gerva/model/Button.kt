@@ -11,11 +11,11 @@ data class Button(
     val secondaryIcon: Int? = null
 ) : Model {
 
-    override val id: String = UUID.randomUUID().toString()
-
     interface Listener {
         fun onButtonClicked(button: Button)
     }
 
-    override fun getViewType(): Int = R.layout.item_button
+    override val id: String = UUID.randomUUID().toString()
+
+    override fun getLayoutId(): Int = R.layout.item_button
 }

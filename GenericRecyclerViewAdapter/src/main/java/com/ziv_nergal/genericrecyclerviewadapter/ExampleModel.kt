@@ -25,5 +25,5 @@ data class ExampleModel(
 
     override val id: String = UUID.randomUUID().toString()
 
-    override fun getViewType(): Int = R.layout.item_example_text
+    override fun getLayoutId(): Int = R.layout.item_example_text
 }

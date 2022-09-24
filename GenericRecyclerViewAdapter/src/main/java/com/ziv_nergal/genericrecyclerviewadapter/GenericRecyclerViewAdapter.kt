@@ -63,7 +63,7 @@ class GenericRecyclerViewAdapter(
         holder.onViewRecycled()
     }
 
-    override fun getItemViewType(position: Int) = differ.currentList[position].getViewType()
+    override fun getItemViewType(position: Int) = differ.currentList[position].getLayoutId()
 
     override fun onBindViewHolder(holder: GenericViewHolder, position: Int) =
         holder.bind(differ.currentList[position])

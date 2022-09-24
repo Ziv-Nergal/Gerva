@@ -9,8 +9,6 @@ data class Student(
     val firstName: String,
     val lastName: String,
     val dateOfBirth: Date
-    ): Model {
-    override fun getViewType(): Int = R.layout.item_student
-    override fun areItemsTheSame(otherItem: Model): Boolean = (otherItem as? Student)?.id == this.id
-    override fun areContentsTheSame(otherItem: Model): Boolean = this == otherItem
+) : Model {
+    override fun getLayoutId(): Int = R.layout.item_student
 }

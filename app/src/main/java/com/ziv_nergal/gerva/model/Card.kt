@@ -12,5 +12,5 @@ class Card : Model {
 
     override val id: String = UUID.randomUUID().toString()
 
-    override fun getViewType(): Int = R.layout.item_card_view
+    override fun getLayoutId(): Int = R.layout.item_card_view
 }
