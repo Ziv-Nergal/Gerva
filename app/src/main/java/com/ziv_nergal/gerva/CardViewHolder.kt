@@ -12,7 +12,7 @@ class CardViewHolder(
     override val binding: ItemCardViewBinding
 ) : GenericRecyclerViewAdapter.GenericViewHolder(binding) {
 
-    override fun bind(model: Model?) {
+    override fun bind(model: Model) {
         super.bind(model)
         binding.cardView.setOnClickListener { animateLetters() }
     }

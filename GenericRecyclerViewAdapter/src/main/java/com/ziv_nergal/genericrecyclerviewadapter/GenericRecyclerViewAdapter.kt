@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter.GenericViewHolder
 
-typealias ViewHolderClickCallback = (Model?, GenericViewHolder) -> Unit
+typealias ViewHolderClickCallback = (Model, GenericViewHolder) -> Unit
 
 class GenericRecyclerViewAdapter(
-    items: List<Model>,
+    items: List<Model> = arrayListOf(),
     private val listener: Any? = null,
     private val viewHolderFactory: ViewHolderFactory? = null,
     private val onViewHolderClicked: ViewHolderClickCallback? = null
@@ -82,10 +82,8 @@ class GenericRecyclerViewAdapter(
         private var onViewHolderClicked: ViewHolderClickCallback? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        open fun bind(model: Model?) {
-            model?.let {
-                binding.setVariable(BR.model, it)
-            }
+        open fun bind(model: Model) {
+            binding.setVariable(BR.model, model)
 
             try {
                 listener?.let { binding.setVariable(BR.listener, it) }
