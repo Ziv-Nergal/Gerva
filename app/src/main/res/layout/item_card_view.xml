@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -23,8 +24,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.75"
             android:layout_marginVertical="8dp"
             app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true"
@@ -39,13 +41,73 @@
 
                 <ImageView
                     android:id="@+id/card_content"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/puzzle"
-                    />
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    tools:src="@drawable/puzzle"
+                    android:src="@{context.getDrawable(model.image)}" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="15dp"
+                    android:gravity="center">
+                    
+                    <TextView
+                        android:id="@+id/animatedTextG"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        tools:textColor="@color/black"
+                        android:layout_marginEnd="1dp"
+                        android:text="G" />
+
+                    <TextView
+                        android:id="@+id/animatedTextE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        tools:textColor="@color/black"
+                        android:layout_marginEnd="1dp"
+                        android:text="e" />
+
+                    <TextView
+                        android:id="@+id/animatedTextR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        tools:textColor="@color/black"
+                        android:layout_marginEnd="1dp"
+                        android:text="r" />
+
+                    <TextView
+                        android:id="@+id/animatedTextV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        tools:textColor="@color/black"
+                        android:layout_marginEnd="1dp"
+                        android:text="v" />
+
+                    <TextView
+                        android:id="@+id/animatedTextA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        tools:textColor="@color/black"
+                        android:layout_marginEnd="1dp"
+                        android:text="a" />
+                    
+                </LinearLayout>
+                
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

@@ -1,15 +1,21 @@
 package com.ziv_nergal.gerva
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ziv_nergal.genericrecyclerviewadapter.GenericRecyclerViewAdapter
 import com.ziv_nergal.gerva.databinding.ActivityMainBinding
 import com.ziv_nergal.gerva.model.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.Listener {
 
@@ -32,8 +38,11 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
         GenericRecyclerViewAdapter(
             listOf(
                 Image(R.drawable.puzzle),
+                Spacer(20),
                 Text(getString(R.string.text_description)),
-                Card(),
+                Spacer(60),
+                Card(R.drawable.ic_baseline_ads_click_24),
+                Spacer(200),
                 Button(
                     getString(R.string.app_name),
                     getString(R.string.button_subtitle),
@@ -62,12 +71,34 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
     }
 
     override fun onButtonClicked(button: Button) {
-        (recyclerView.adapter as? GenericRecyclerViewAdapter)?.updateData(
-            arrayListOf(
-                Student("1", "Will", "Smith", Date(63, 2, 1)),
-                Student("2", "Harry", "Potter", Date(72, 11, 3)),
-                Student("3", "Dave", "Lawrence", Date(99, 8, 5))
-            )
-        )
+        (recyclerView.layoutManager as? LinearLayoutManager)?.let { manager ->
+            val first = manager.findFirstVisibleItemPosition()
+            val second = manager.findLastVisibleItemPosition()
+
+            var millis: Long = 0
+
+            MainScope().launch {
+                first.rangeTo(second).forEach {
+                    manager.findViewByPosition(it)?.let { viewHolder ->
+                        delay(millis)
+                        millis += 30
+
+                        viewHolder.animate().scaleX(1.05f).scaleY(1.05f).withEndAction {
+                            viewHolder.animate().scaleY(1f).scaleX(1f)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        @BindingAdapter("bind:height")
+        @JvmStatic
+        fun setHeight(view: View, height: Int) {
+            val params: ViewGroup.LayoutParams = view.layoutParams
+            params.height = height
+            view.layoutParams = params
+        }
     }
 }
