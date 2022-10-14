@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
     private fun initGenericRecyclerViewAdapter() {
         GenericRecyclerViewAdapter(
             listOf(
+                VerticalSpacer(50),
+
                 Image(R.drawable.puzzle),
 
                 VerticalSpacer(20),
@@ -47,10 +49,10 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
 
                 Card(R.drawable.ic_baseline_ads_click_24),
 
-                VerticalSpacer(150),
+                VerticalSpacer(175),
 
                 Button(
-                    getString(R.string.app_name),
+                    getString(R.string.button_title),
                     getString(R.string.button_subtitle),
                     R.drawable.ic_baseline_flip_camera_android_24
                 )
