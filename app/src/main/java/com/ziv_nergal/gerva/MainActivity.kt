@@ -38,11 +38,17 @@ class MainActivity : AppCompatActivity(), Text.Listener, Button.Listener, Card.L
         GenericRecyclerViewAdapter(
             listOf(
                 Image(R.drawable.puzzle),
-                Spacer(20),
+
+                VerticalSpacer(20),
+
                 Text(getString(R.string.text_description)),
-                Spacer(60),
+
+                VerticalSpacer(20),
+
                 Card(R.drawable.ic_baseline_ads_click_24),
-                Spacer(200),
+
+                VerticalSpacer(150),
+
                 Button(
                     getString(R.string.app_name),
                     getString(R.string.button_subtitle),
