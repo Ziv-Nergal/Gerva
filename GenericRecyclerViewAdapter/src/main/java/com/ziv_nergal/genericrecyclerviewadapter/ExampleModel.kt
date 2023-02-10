@@ -9,7 +9,7 @@ import java.util.*
  * NOTE - the variable holding this model in your xml file will have
  *        to be named 'model' in order for the binding to work.
  */
-data class ExampleModel(
+internal data class ExampleModel(
     val text: String
 ) : Model {
 
