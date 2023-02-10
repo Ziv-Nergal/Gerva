@@ -4,7 +4,7 @@ import com.ziv_nergal.genericrecyclerviewadapter.Model
 import com.ziv_nergal.gerva.R
 import java.util.*
 
-class Card : Model {
+data class Card(val image: Int) : Model {
 
     interface Listener {
         fun onCardFlipped()

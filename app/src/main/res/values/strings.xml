@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Gerva</string>
     <string name="card_content">this example shows the endless possibilities of the generic recyclerView adapter.\nyou can either create simple view holders using the generic viewHolder, or create a more complex one by inheriting the generic view holder. this card will demonstrate how flexible this methos is.</string>
-    <string name="text_description">This is a recyclerView with a generic adapter.\n It can display any sort of view holder as long as it is being presented by a class implementing Model protocol.</string>
-    <string name="button_subtitle">Reload recyclerView data</string>
+    <string name="text_description">This is a recyclerView with a generic adapter.\n It can display any sort of view holder as long as it is being presented by a class implementing Model interface.</string>
+    <string name="button_title">Click here</string>
+    <string name="button_subtitle">Animate visible view holders</string>
 </resources>
